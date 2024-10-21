@@ -23,8 +23,10 @@ function App() {
 
           <div className="row mt-5">
               {
-                guitars.map(() => (
-                    <Guitar />
+                guitars.map((guitar) => (
+                    <Guitar 
+                      guitar={guitar}
+                    />
                 ))
               }
           </div>
