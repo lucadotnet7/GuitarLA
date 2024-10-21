@@ -6,13 +6,29 @@ import { db } from './data/db';
 
 function App() {
 
-  const [guitars, setGuitars] = useState([]);
+  const [guitars, setGuitars] = useState(db);
+  const [cart, setCart] = useState([]);
+  
+  function addToCart(guitar) {
+    //inmutabilidad en react
+    const guitarExists = cart.findIndex((g) => g.id == guitar.id);
 
-  //Uso useEffect para simular que es una API.
+    if(guitarExists == -1) {
+      guitar.quantity = 1;
+      setCart([...cart, guitar]);
+    } else {
+      const updatedCart = [...cart];
+      updatedCart[guitarExists].quantity++;
+      setCart(updatedCart);
+    }
+
+  }
+
+  //USAR useEffect para consultar una API.
   //NOTA: Para archivos locales puedo setearlo directamente en la definición del useState
-  useEffect(() => {
-    setGuitars(db);
-  }, []);
+  //useEffect(() => {
+    //setGuitars(db);
+  //}, []);
 
   return (
     <>
@@ -24,8 +40,11 @@ function App() {
           <div className="row mt-5">
               {
                 guitars.map((guitar) => (
-                    <Guitar 
+                    <Guitar
+                      key={guitar.id}
                       guitar={guitar}
+                      setCart={setCart}
+                      addToCart={addToCart}
                     />
                 ))
               }
