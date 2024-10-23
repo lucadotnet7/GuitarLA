@@ -6,12 +6,29 @@ import { db } from './data/db';
 
 function App() {
 
-  const [guitars, setGuitars] = useState(db);
-  const [cart, setCart] = useState([]);
-  
+  //#region Global Variables
   const MAX_QUANTITY = 5;
   const MIN_QUANTITY = 1;
+  //#endregion
+  
+  //#region States
+  const [guitars, setGuitars] = useState(db);
+  const [cart, setCart] = useState(getFromLocalStorage("cart"));
+  //#endregion
 
+  //#region Effects
+  //USAR useEffect para consultar una API.
+  //NOTA: Para archivos locales puedo setearlo directamente en la definición del useState
+  //useEffect(() => {
+    //setGuitars(db);
+  //}, []);
+
+  useEffect(() => {
+    saveLocalStorage("cart");
+  }, [cart]);
+  //#endregion
+  
+  //#region Functions
   function addToCart(guitar) {
     //inmutabilidad en react
     const guitarExists = cart.findIndex((g) => g.id == guitar.id);
@@ -24,8 +41,6 @@ function App() {
       updatedCart[guitarExists].quantity++;
       setCart(updatedCart);
     }
-
-    saveLocalStorage();
   }
 
   function removeFromCart(id) {
@@ -65,15 +80,17 @@ function App() {
     setCart([]);
   }
 
-  function saveLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+  function saveLocalStorage(key) {
+    //El state de React es asincrono
+    localStorage.setItem(key, JSON.stringify(cart));
   }
 
-  //USAR useEffect para consultar una API.
-  //NOTA: Para archivos locales puedo setearlo directamente en la definición del useState
-  //useEffect(() => {
-    //setGuitars(db);
-  //}, []);
+  function getFromLocalStorage(key) {
+    const value = localStorage.getItem(key);
+
+    return value != null ? JSON.parse(value) : [];
+  }
+  //#endregion
 
   return (
     <>
