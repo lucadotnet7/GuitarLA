@@ -12,7 +12,7 @@ function App() {
   //#endregion
   
   //#region States
-  const [guitars, setGuitars] = useState(db);
+  const [guitars] = useState(db);
   const [cart, setCart] = useState(getFromLocalStorage("cart"));
   //#endregion
 
