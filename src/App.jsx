@@ -24,6 +24,8 @@ function App() {
       updatedCart[guitarExists].quantity++;
       setCart(updatedCart);
     }
+
+    saveLocalStorage();
   }
 
   function removeFromCart(id) {
@@ -61,6 +63,10 @@ function App() {
 
   function clearCart() {
     setCart([]);
+  }
+
+  function saveLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 
   //USAR useEffect para consultar una API.
