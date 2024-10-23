@@ -1,4 +1,4 @@
-function CartTable({cart}) {
+function CartTable({cart, removeFromCart, increaseQuantity, decreaseQuantity}) {
     return(
         <table className="w-100 table">
             <thead>
@@ -25,6 +25,7 @@ function CartTable({cart}) {
                                 <button
                                     type="button"
                                     className="btn btn-dark"
+                                    onClick={() => decreaseQuantity(guitar.id)}
                                 >
                                     -
                                 </button>
@@ -32,6 +33,7 @@ function CartTable({cart}) {
                                 <button
                                     type="button"
                                     className="btn btn-dark"
+                                    onClick={() => increaseQuantity(guitar.id)}
                                 >
                                     +
                                 </button>
@@ -40,6 +42,7 @@ function CartTable({cart}) {
                                 <button
                                     className="btn btn-danger"
                                     type="button"
+                                    onClick={() => removeFromCart(guitar.id)}
                                 >
                                     X
                                 </button>
