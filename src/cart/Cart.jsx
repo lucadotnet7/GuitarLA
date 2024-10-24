@@ -1,11 +1,6 @@
-import { useMemo } from "react";
 import CartTable from "./components/CartTable";
 
-function Cart({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart}) {
-    //Derivated State
-    const isEmpty = useMemo(() => cart.length === 0);
-    const totalPrice = useMemo(() => cart.reduce((total, guitar) => total + (guitar.quantity * guitar.price), 0));
-
+function Cart({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, totalPrice}) {
     return(
         <div id="carrito" className="bg-white p-3">
             {
